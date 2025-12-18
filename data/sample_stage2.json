@@ -1,0 +1,24 @@
+{
+  "user_angles": {
+    "Mars": 120.0,
+    "Venus": 45.0
+  },
+  "events": [
+    {
+      "time": 1716307200,
+      "planets": [
+        "Mars",
+        "Jupiter"
+      ],
+      "target_angle": 90.0
+    },
+    {
+      "time": 1716307260,
+      "planets": [
+        "Venus",
+        "Saturn"
+      ],
+      "target_angle": 180.0
+    }
+  ]
+}

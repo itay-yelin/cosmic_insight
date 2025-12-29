@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import argparse
 
-from .io_json import load_json, save_json
+from .io_json import load_model, save_json
 from .pipeline import run_all, run_stage
+from .types import Stage1Input, Stage2Input, Stage3Input
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -25,7 +26,16 @@ def main(argv: list[str] | None = None) -> int:
         run_all(args.input, args.out)
         return 0
 
-    payload = load_json(args.input)
+    if args.stage == "1":
+        payload = load_model(args.input, Stage1Input)
+    elif args.stage == "2":
+        payload = load_model(args.input, Stage2Input)
+    elif args.stage == "3":
+        payload = load_model(args.input, Stage3Input)
+    else:
+        # Should be unreachable due to argparse choices
+        raise ValueError(f"Unknown stage: {args.stage}")
+
     result = run_stage(args.stage, payload)
     save_json(args.out, result)
     return 0

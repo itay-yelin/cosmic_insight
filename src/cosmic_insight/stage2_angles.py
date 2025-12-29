@@ -21,18 +21,18 @@ def match_events(
     matches: list[Match] = []
 
     for e in events:
-        for p in e["planets"]:
+        for p in e.planets:
             if p not in user_angles:
                 continue
 
-            delta = abs(user_angles[p] - e["target_angle"])
+            delta = abs(user_angles[p] - e.target_angle)
             if delta <= tolerance_deg:
                 matches.append(
-                    {
-                        "time": int(e["time"]),
-                        "planets": list(e["planets"]),
-                        "score": round(score_match(delta, tolerance_deg), 3),
-                    }
+                    Match(
+                        time=e.time,
+                        planets=list(e.planets),
+                        score=round(score_match(delta, tolerance_deg), 3),
+                    )
                 )
                 break
 
@@ -42,6 +42,6 @@ def match_events(
 def process_stage2(payload: Stage2Input, cfg: Stage2Config | None = None) -> Stage2Output:
     cfg = cfg or Stage2Config()
     matches = match_events(
-        payload["user_angles"], payload["events"], tolerance_deg=cfg.tolerance_deg
+        payload.user_angles, payload.events, tolerance_deg=cfg.tolerance_deg
     )
-    return {"matches": matches}
+    return Stage2Output(matches=matches)

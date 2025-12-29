@@ -17,8 +17,9 @@ def detect_change_points(smoothed: list[float], threshold: float) -> list[int]:
     return change_points
 
 
+
 def process_stage1(payload: Stage1Input, cfg: Stage1Config | None = None) -> Stage1Output:
     cfg = cfg or Stage1Config()
-    smoothed = smooth_signal(payload["mood_samples"], window=cfg.window)
+    smoothed = smooth_signal(payload.mood_samples, window=cfg.window)
     change_points = detect_change_points(smoothed, threshold=cfg.change_threshold)
-    return {"smoothed": [round(x, 3) for x in smoothed], "change_points": change_points}
+    return Stage1Output(smoothed=[round(x, 3) for x in smoothed], change_points=change_points)

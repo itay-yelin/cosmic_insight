@@ -4,7 +4,7 @@ import numpy as np
 from scipy.stats import pearsonr
 
 from .config import Stage3Config
-from .types import Stage3Input, Stage3Output
+from .types import Stage3Input, Stage3Output, StrongestLink
 
 
 def strongest_correlation(mood: np.ndarray, angles: np.ndarray) -> tuple[int, int, float, float]:
@@ -29,14 +29,14 @@ def strongest_correlation(mood: np.ndarray, angles: np.ndarray) -> tuple[int, in
 
 def process_stage3(payload: Stage3Input, cfg: Stage3Config | None = None) -> Stage3Output:
     _ = cfg or Stage3Config()
-    mood = np.asarray(payload["mood_data"], dtype=float)
-    angles = np.asarray(payload["event_angles"], dtype=float)
+    mood = np.asarray(payload.mood_data, dtype=float)
+    angles = np.asarray(payload.event_angles, dtype=float)
     i, j, corr, p = strongest_correlation(mood, angles)
-    return {
-        "strongest_link": {
-            "mood_column": i,
-            "angle_column": j,
-            "correlation": round(corr, 3),
-            "p_value": round(p, 6),
-        }
-    }
+    return Stage3Output(
+        strongest_link=StrongestLink(
+            mood_column=i,
+            angle_column=j,
+            correlation=round(corr, 3),
+            p_value=round(p, 6),
+        )
+    )

@@ -1,54 +1,56 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Literal, TypedDict
+from typing import Any, Literal
+
+from pydantic import BaseModel
 
 
-class Stage1Input(TypedDict):
+class Stage1Input(BaseModel):
     user_id: str
     mood_samples: list[float]
     timestamps: list[int]
 
 
-class Stage1Output(TypedDict):
+class Stage1Output(BaseModel):
     smoothed: list[float]
     change_points: list[int]
 
 
-class Event(TypedDict):
+class Event(BaseModel):
     time: int
     planets: list[str]
     target_angle: float
 
 
-class Stage2Input(TypedDict):
+class Stage2Input(BaseModel):
     user_angles: dict[str, float]
     events: list[Event]
 
 
-class Match(TypedDict):
+class Match(BaseModel):
     time: int
     planets: list[str]
     score: float
 
 
-class Stage2Output(TypedDict):
+class Stage2Output(BaseModel):
     matches: list[Match]
 
 
-class Stage3Input(TypedDict):
+class Stage3Input(BaseModel):
     mood_data: list[list[float]]
     event_angles: list[list[float]]
 
 
-class StrongestLink(TypedDict):
+class StrongestLink(BaseModel):
     mood_column: int
     angle_column: int
     correlation: float
     p_value: float
 
 
-class Stage3Output(TypedDict):
+class Stage3Output(BaseModel):
     strongest_link: StrongestLink
 
 

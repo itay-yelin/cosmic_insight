@@ -36,3 +36,8 @@ make lint
 make type
 make test
 ```
+
+## Assumptions
+- Mood samples are normalized to [0,1]
+- Timestamps are monotonic
+- Angle units are degrees

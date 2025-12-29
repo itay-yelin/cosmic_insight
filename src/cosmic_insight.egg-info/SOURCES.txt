@@ -13,6 +13,7 @@ src/cosmic_insight/utils.py
 src/cosmic_insight.egg-info/PKG-INFO
 src/cosmic_insight.egg-info/SOURCES.txt
 src/cosmic_insight.egg-info/dependency_links.txt
+src/cosmic_insight.egg-info/entry_points.txt
 src/cosmic_insight.egg-info/requires.txt
 src/cosmic_insight.egg-info/top_level.txt
 tests/test_pipeline.py
